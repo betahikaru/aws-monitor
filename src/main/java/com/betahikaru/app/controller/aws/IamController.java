@@ -10,8 +10,8 @@ import com.betahikaru.app.pojo.aws.Ec2Status;
 import com.betahikaru.app.usecase.aws.Ec2Monitor;
 
 @Controller
-@RequestMapping("/aws/ec2")
-public class Ec2Controller {
+@RequestMapping("/aws/iam")
+public class IamController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody Ec2Status status(

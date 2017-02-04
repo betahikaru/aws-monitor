@@ -14,7 +14,8 @@ import com.betahikaru.app.usecase.aws.AwsMonitor;
 public class AwsController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody AwsStatus status(@RequestParam(value = "iam", required = false, defaultValue = "") String iam) {
+	public @ResponseBody AwsStatus status(
+			@RequestParam(value = "iam", required = false, defaultValue = "") String iam) {
 		AwsStatus awsStatus = AwsMonitor.getInstance().monitorStatus();
 		return awsStatus;
 	}

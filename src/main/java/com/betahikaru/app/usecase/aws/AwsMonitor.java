@@ -2,6 +2,7 @@ package com.betahikaru.app.usecase.aws;
 
 import com.betahikaru.app.pojo.aws.AwsStatus;
 import com.betahikaru.app.pojo.aws.Ec2Status;
+import com.betahikaru.app.pojo.aws.IamStatus;
 
 public class AwsMonitor {
 
@@ -19,7 +20,8 @@ public class AwsMonitor {
 
 	public AwsStatus monitorStatus() {
 		Ec2Status ec2Status = Ec2Monitor.getInstance().monitorStatus();
-		AwsStatus awsStatus = new AwsStatus(ec2Status);
+		IamStatus iamStatus = IamMonitor.getInstance().monitorStatus();
+		AwsStatus awsStatus = new AwsStatus(ec2Status, iamStatus);
 		return awsStatus;
 	}
 }
