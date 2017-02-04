@@ -1,44 +1,48 @@
 package com.betahikaru.app.usecase.aws;
 
-import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.Reservation;
+import com.betahikaru.app.common.aws.AwsConst;
+import com.betahikaru.app.config.aws.AwsApiConfig;
 import com.betahikaru.app.pojo.aws.Ec2Status;
 
+@Component
 public class Ec2Monitor {
 
-	public static final int STATE_INSTANCE_RUNNING = 16;
-
-	private static Ec2Monitor singleton = null;
-
-	private final AmazonEC2ClientBuilder builder;
-
-	private final AmazonEC2 ec2;
+	@Autowired
+	private AwsApiConfig apiConfig;
 
 	private Ec2Monitor() {
-		builder = AmazonEC2ClientBuilder.standard().withRegion(Regions.AP_NORTHEAST_1)
-				.withCredentials(new ProfileCredentialsProvider("default"));
-		ec2 = createClient();
 	}
 
-	public static Ec2Monitor getInstance() {
-		if (singleton == null) {
-			singleton = new Ec2Monitor();
-		}
-		return singleton;
+	private AmazonEC2 createClient(AmazonEC2ClientBuilder builder) {
+		return builder.build();
+	}
+
+	private AmazonEC2 createClient() {
+		Regions region = apiConfig.getRegion();
+		AWSCredentialsProvider credentialsProvider = apiConfig.getCredentialsProvider();
+		AmazonEC2ClientBuilder builder = AmazonEC2ClientBuilder.standard().withRegion(region)
+				.withCredentials(credentialsProvider);
+		return createClient(builder);
 	}
 
 	public Ec2Status monitorStatus() {
 		int countAll = 0;
 		int countRunning = 0;
-		DescribeInstancesResult result = ec2.describeInstances();
+		AmazonEC2 ec2Client = createClient();
+		DescribeInstancesResult result = ec2Client.describeInstances();
 		for (Reservation reservation : result.getReservations()) {
 			for (Instance instance : reservation.getInstances()) {
-				if (instance.getState().getCode() == STATE_INSTANCE_RUNNING) {
+				if (instance.getState().getCode() == AwsConst.EC2_INSTANCESTATE_RUNNING) {
 					countRunning++;
 				}
 				countAll++;
@@ -46,9 +50,5 @@ public class Ec2Monitor {
 		}
 		Ec2Status status = new Ec2Status(countAll, countRunning);
 		return status;
-	}
-
-	private AmazonEC2 createClient() {
-		return builder.build();
 	}
 }
