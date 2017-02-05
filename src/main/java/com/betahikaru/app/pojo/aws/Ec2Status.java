@@ -1,6 +1,6 @@
 package com.betahikaru.app.pojo.aws;
 
-public class Ec2Status {
+public class Ec2Status extends AbstractStatus {
 	private final int countAll;
 	private final int countRunning;
 

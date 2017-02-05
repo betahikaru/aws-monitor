@@ -1,19 +1,15 @@
 package com.betahikaru.app.pojo.aws;
 
+import java.util.Map;
+
 public class AwsStatus {
-	private final Ec2Status ec2Status;
-	private final IamStatus iamStatus;
+	private final Map<String, AbstractStatus> statusMap;
 
-	public AwsStatus(Ec2Status ec2Status, IamStatus iamStatus) {
-		this.ec2Status = ec2Status;
-		this.iamStatus = iamStatus;
+	public AwsStatus(Map<String, AbstractStatus> statusMap) {
+		this.statusMap = statusMap;
 	}
 
-	public Ec2Status getEc2Status() {
-		return ec2Status;
-	}
-
-	public IamStatus getIamStatus() {
-		return iamStatus;
+	public Map<String, AbstractStatus> getStatusMap() {
+		return statusMap;
 	}
 }
