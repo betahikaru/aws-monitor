@@ -14,11 +14,11 @@ import com.betahikaru.app.pojo.Status;
 import com.betahikaru.app.pojo.aws.AwsStatus;
 import com.betahikaru.app.usecase.Monitor;
 
-public abstract class AwsController {
+public abstract class AbstractAwsController {
 
 	List<Monitor> monitors;
 
-	public AwsController() {
+	public AbstractAwsController() {
 		monitors = new ArrayList<>();
 	}
 

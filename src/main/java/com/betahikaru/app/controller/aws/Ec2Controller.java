@@ -1,7 +1,6 @@
 package com.betahikaru.app.controller.aws;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,7 +14,6 @@ import com.betahikaru.app.usecase.aws.Ec2Monitor;
 @RequestMapping("/aws/ec2")
 public class Ec2Controller {
 
-	@Qualifier("aws.ec2")
 	@Autowired
 	Ec2Monitor ec2Monitor;
 

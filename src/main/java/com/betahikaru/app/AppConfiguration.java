@@ -21,12 +21,12 @@ public class AppConfiguration {
 		return new AwsApiConfig().withRegions(Regions.AP_NORTHEAST_1).withProfile("default");
 	}
 
-	@Bean("aws.ec2")
+	@Bean
 	Ec2Monitor ec2Monitor() {
 		return new Ec2Monitor();
 	}
 
-	@Bean("aws.iam")
+	@Bean
 	IamMonitor iamMonitor() {
 		return new IamMonitor();
 	}
