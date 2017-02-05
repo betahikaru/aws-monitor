@@ -12,15 +12,13 @@ import com.amazonaws.services.identitymanagement.AmazonIdentityManagementClientB
 import com.amazonaws.services.identitymanagement.model.GetAccountSummaryResult;
 import com.betahikaru.app.config.aws.AwsApiConfig;
 import com.betahikaru.app.pojo.aws.IamStatus;
+import com.betahikaru.app.usecase.Monitor;
 
 @Component
-public class IamMonitor {
+public class IamMonitor implements Monitor {
 
 	@Autowired
 	private AwsApiConfig apiConfig;
-
-	private IamMonitor() {
-	}
 
 	private AmazonIdentityManagement createClient(AmazonIdentityManagementClientBuilder builder) {
 		return builder.build();

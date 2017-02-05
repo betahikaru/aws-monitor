@@ -13,15 +13,13 @@ import com.amazonaws.services.ec2.model.Reservation;
 import com.betahikaru.app.common.aws.AwsConst;
 import com.betahikaru.app.config.aws.AwsApiConfig;
 import com.betahikaru.app.pojo.aws.Ec2Status;
+import com.betahikaru.app.usecase.Monitor;
 
 @Component
-public class Ec2Monitor {
+public class Ec2Monitor implements Monitor {
 
 	@Autowired
 	private AwsApiConfig apiConfig;
-
-	private Ec2Monitor() {
-	}
 
 	private AmazonEC2 createClient(AmazonEC2ClientBuilder builder) {
 		return builder.build();

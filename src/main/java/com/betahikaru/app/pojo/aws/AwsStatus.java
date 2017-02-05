@@ -3,13 +3,13 @@ package com.betahikaru.app.pojo.aws;
 import java.util.Map;
 
 public class AwsStatus {
-	private final Map<String, AbstractStatus> statusMap;
+	private final Map<String, Object> statusMap;
 
-	public AwsStatus(Map<String, AbstractStatus> statusMap) {
+	public AwsStatus(Map<String, Object> statusMap) {
 		this.statusMap = statusMap;
 	}
 
-	public Map<String, AbstractStatus> getStatusMap() {
+	public Map<String, Object> getStatusMap() {
 		return statusMap;
 	}
 }

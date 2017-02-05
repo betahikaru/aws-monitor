@@ -1,6 +1,6 @@
 package com.betahikaru.app.pojo.aws;
 
-public class IamStatus extends AbstractStatus {
+public class IamStatus {
 	private final int countUsers;
 	private final int countGroups;
 	private final int countRoles;
