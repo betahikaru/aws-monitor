@@ -2,14 +2,21 @@ package com.betahikaru.app.pojo.aws;
 
 import java.util.Map;
 
-public class AwsStatus {
-	private final Map<String, Object> statusMap;
+import com.betahikaru.app.pojo.Status;
 
-	public AwsStatus(Map<String, Object> statusMap) {
+public class AwsStatus implements Status {
+	private final Map<String, Status> statusMap;
+
+	public AwsStatus(Map<String, Status> statusMap) {
 		this.statusMap = statusMap;
 	}
 
-	public Map<String, Object> getStatusMap() {
+	@Override
+	public String getName() {
+		return this.getClass().getSimpleName();
+	}
+
+	public Map<String, Status> getStatusMap() {
 		return statusMap;
 	}
 }

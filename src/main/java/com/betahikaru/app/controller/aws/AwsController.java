@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.betahikaru.app.pojo.Status;
 import com.betahikaru.app.pojo.aws.AwsStatus;
 import com.betahikaru.app.usecase.Monitor;
 
@@ -24,10 +25,10 @@ public abstract class AwsController {
 	@RequestMapping(method = RequestMethod.GET)
 	public @ResponseBody AwsStatus status(
 			@RequestParam(value = "iam", required = false, defaultValue = "") String iam) {
-		Map<String, Object> statusMap = new HashMap<>();
+		Map<String, Status> statusMap = new HashMap<>();
 		for (Monitor monitor : monitors) {
-			Object iamStatus = monitor.monitorStatus();
-			statusMap.put(iamStatus.getClass().getName(), iamStatus);
+			Status status = monitor.monitorStatus();
+			statusMap.put(status.getName(), status);
 		}
 		AwsStatus awsStatus = new AwsStatus(statusMap);
 		return awsStatus;

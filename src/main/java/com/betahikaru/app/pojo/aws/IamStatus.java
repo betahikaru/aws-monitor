@@ -1,6 +1,8 @@
 package com.betahikaru.app.pojo.aws;
 
-public class IamStatus {
+import com.betahikaru.app.pojo.Status;
+
+public class IamStatus implements Status {
 	private final int countUsers;
 	private final int countGroups;
 	private final int countRoles;
@@ -9,6 +11,11 @@ public class IamStatus {
 		this.countUsers = countUsers;
 		this.countGroups = countGroups;
 		this.countRoles = countRoles;
+	}
+
+	@Override
+	public String getName() {
+		return this.getClass().getSimpleName();
 	}
 
 	public int getCountUsers() {
