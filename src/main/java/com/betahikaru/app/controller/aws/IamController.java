@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.betahikaru.app.pojo.aws.IamStatus;
@@ -18,8 +17,7 @@ public class IamController {
 	IamMonitor iamMonitor;
 
 	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody IamStatus status(
-			@RequestParam(value = "iam", required = false, defaultValue = "") String iam) {
+	public @ResponseBody IamStatus status() {
 		IamStatus iamStatus = iamMonitor.monitorStatus();
 		return iamStatus;
 	}

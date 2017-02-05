@@ -1,6 +1,8 @@
 package com.betahikaru.app.pojo.aws;
 
-public class Ec2Status {
+import com.betahikaru.app.pojo.Status;
+
+public class Ec2Status implements Status {
 	private final int countAll;
 	private final int countRunning;
 
@@ -8,6 +10,11 @@ public class Ec2Status {
 		super();
 		this.countAll = countAll;
 		this.countRunning = countRunning;
+	}
+
+	@Override
+	public String getName() {
+		return this.getClass().getSimpleName();
 	}
 
 	public int getCountAll() {
