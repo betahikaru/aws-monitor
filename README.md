@@ -27,7 +27,7 @@ Specify Region by Environment Valiable. Default is "ap-northeast-1".
 ## Start/Stop
 
 * start
-  *  ```java -jar aws-monitor-0.1.0.jar```
+  *  ```java -jar aws-monitor-0.2.0.jar```
 * stop
   * Press Ctrl+C or Send SIG_TERM
 
