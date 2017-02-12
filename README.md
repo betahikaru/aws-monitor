@@ -68,7 +68,7 @@ Specify Region by Environment Valiable. Default is "ap-northeast-1".
 
 * ```/aws/ec2```
   * countAll: Count of All EC2 Instances.
-  * countRunning: Count of EC2 Instances that is "runngin" state.
+  * countRunning: Count of EC2 Instances that is "running" state.
 
 ```bash
 % curl -XGET "http://localhost:8080/aws/ec2" | jq .
