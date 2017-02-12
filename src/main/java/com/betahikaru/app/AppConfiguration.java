@@ -15,6 +15,7 @@ import com.amazonaws.regions.Regions;
 import com.betahikaru.app.config.aws.AwsApiConfig;
 import com.betahikaru.app.usecase.aws.Ec2Monitor;
 import com.betahikaru.app.usecase.aws.IamMonitor;
+import com.betahikaru.app.usecase.aws.S3Monitor;
 
 @SpringBootApplication
 public class AppConfiguration {
@@ -67,5 +68,10 @@ public class AppConfiguration {
 	@Bean
 	IamMonitor iamMonitor() {
 		return new IamMonitor();
+	}
+
+	@Bean
+	S3Monitor S3Monitor() {
+		return new S3Monitor();
 	}
 }
