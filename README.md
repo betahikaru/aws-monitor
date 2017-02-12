@@ -9,19 +9,20 @@ NOTE: aws-monitor is still in development.
 
 ## Setup
 
-If you don't to setup aws configuration, you shoud setup now. (~/.aws/config etc...)
+Two ways to specify Aws Credentials,
+IAM User Credential Keys or AWS Profile Name, by Environment Valiable.
+Default is AWS Profile named "default".
 
-aws-monitor is requied aws profile named "default".
+* IAM User Credential Keys
+  * ```AWS_ACCESS_KEY_ID```
+  * ```AWS_SECRET_ACCESS_KEY```
+* AWS Profile Name (~/.aws/config)
+  * ```AWS_PROFILE```
 
-### To developers
 
-If you want to use other profile, you shoud change code on AppConfiguration#defaultAwsApiConfig.
+Specify Region by Environment Valiable. Default is "ap-northeast-1".
 
-```java:AppConfiguration#defaultAwsApiConfig
-return new AwsApiConfig().withRegions(Regions.AP_NORTHEAST_1).withProfile("default");
-```
-
-And, you want to monitor region other than "AP_NORTHEAST_1", you shoud change code on AppConfiguration#defaultAwsApiConfig, too.
+* ```AWS_REGION```
 
 ## Start/Stop
 
@@ -35,9 +36,20 @@ And, you want to monitor region other than "AP_NORTHEAST_1", you shoud change co
 * ```/aws```
 
 ```bash
-% curl -XGET "http://localhost:8080/aws" | jq .                                                                                                                                    ✭
+% curl -XGET "http://localhost:8080/aws" | jq .
 {
   "statusMap": {
+    "S3Status": {
+      "countBuckets": 5,
+      "bucketNames": [
+        "aaa.betahikaru.com",
+        "bbb.betahikaru.com",
+        "ccc.betahikaru.com",
+        "ddd.betahikaru.com",
+        "eee.betahikaru.com"
+      ],
+      "name": "S3Status"
+    },
     "Ec2Status": {
       "countAll": 8,
       "countRunning": 1,
@@ -56,10 +68,10 @@ And, you want to monitor region other than "AP_NORTHEAST_1", you shoud change co
 
 * ```/aws/ec2```
   * countAll: Count of All EC2 Instances.
-  * countRunning: Count of EC2 Instances that is "runngin" state.
+  * countRunning: Count of EC2 Instances that is "running" state.
 
 ```bash
-% curl -XGET "http://localhost:8080/aws/ec2" | jq .                                                                                                                                ✭
+% curl -XGET "http://localhost:8080/aws/ec2" | jq .
 {
   "countAll": 8,
   "countRunning": 1,
@@ -68,9 +80,12 @@ And, you want to monitor region other than "AP_NORTHEAST_1", you shoud change co
 ```
 
 * ```/aws/iam```
+  * countUsers: Count of IAM Users.
+  * countGroups: Count of IAM Groups.
+  * countRoles: Count of IAM Roles.
 
 ```bash
-% curl -XGET "http://localhost:8080/aws/iam" | jq .                                                                                                                                ✭
+% curl -XGET "http://localhost:8080/aws/iam" | jq .
 {
   "countUsers": 13,
   "countGroups": 11,
@@ -79,12 +94,31 @@ And, you want to monitor region other than "AP_NORTHEAST_1", you shoud change co
 }
 ```
 
+* ```/aws/s3```
+  * countBuckets: Count of S3 Buckets.
+  * bucketNames: S3 Buckets Name list.
+
+```bash
+% curl -XGET "http://localhost:8080/aws/s3" | jq .
+{
+  "countBuckets": 5,
+  "bucketNames": [
+    "aaa.betahikaru.com",
+    "bbb.betahikaru.com",
+    "ccc.betahikaru.com",
+    "ddd.betahikaru.com",
+    "eee.betahikaru.com"
+  ],
+  "name": "S3Status"
+}
+```
+
 ## Errors
 
 * Not found AWS Profile
 
 ```bash
-% curl -XGET "http://localhost:8080/aws" | jq .                                                                                                                                    ✹
+% curl -XGET "http://localhost:8080/aws" | jq .
 {
   "timestamp": 1486281022415,
   "status": 500,
@@ -97,7 +131,7 @@ And, you want to monitor region other than "AP_NORTHEAST_1", you shoud change co
 * No permission to read status for AWS Service
 
 ```bash
-% curl -XGET "http://localhost:8080/aws" | jq .                                                                                                                                    ✹
+% curl -XGET "http://localhost:8080/aws" | jq .
 {
   "timestamp": 1486281054396,
   "status": 500,
