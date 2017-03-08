@@ -1,5 +1,6 @@
 package com.betahikaru.app.usecase.aws;
 
+import java.sql.Timestamp;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +36,12 @@ public class IamMonitor implements Monitor {
 	public IamStatus monitorStatus() {
 		AmazonIdentityManagement iamClient = createClient();
 		GetAccountSummaryResult result = iamClient.getAccountSummary();
+		Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 		Map<String, Integer> summary = result.getSummaryMap();
 		int countUsers = summary.get("Users");
 		int countGroups = summary.get("Groups");
 		int countRoles = summary.get("Roles");
-		IamStatus status = new IamStatus(countUsers, countGroups, countRoles);
+		IamStatus status = new IamStatus(countUsers, countGroups, countRoles, createdAt);
 		return status;
 	}
 }

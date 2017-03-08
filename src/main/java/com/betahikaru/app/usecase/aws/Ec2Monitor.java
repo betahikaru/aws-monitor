@@ -1,5 +1,7 @@
 package com.betahikaru.app.usecase.aws;
 
+import java.sql.Timestamp;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,6 +40,7 @@ public class Ec2Monitor implements Monitor {
 		int countRunning = 0;
 		AmazonEC2 ec2Client = createClient();
 		DescribeInstancesResult result = ec2Client.describeInstances();
+		Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 		for (Reservation reservation : result.getReservations()) {
 			for (Instance instance : reservation.getInstances()) {
 				if (instance.getState().getCode() == AwsConst.EC2_INSTANCESTATE_RUNNING) {
@@ -46,7 +49,7 @@ public class Ec2Monitor implements Monitor {
 				countAll++;
 			}
 		}
-		Ec2Status status = new Ec2Status(countAll, countRunning);
+		Ec2Status status = new Ec2Status(countAll, countRunning, createdAt);
 		return status;
 	}
 }

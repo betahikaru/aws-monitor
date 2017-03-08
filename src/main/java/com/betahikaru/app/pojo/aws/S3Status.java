@@ -1,17 +1,20 @@
 package com.betahikaru.app.pojo.aws;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import com.betahikaru.app.pojo.Status;
 
 public class S3Status implements Status {
 	private final int countBuckets;
+	private final Timestamp createdAt;
 
 	private final List<String> bucketNames;
 
-	public S3Status(int countBuckets, List<String> bucketNames) {
+	public S3Status(int countBuckets, List<String> bucketNames, Timestamp createdAt) {
 		this.countBuckets = countBuckets;
 		this.bucketNames = bucketNames;
+		this.createdAt = createdAt;
 	}
 
 	@Override
@@ -25,5 +28,10 @@ public class S3Status implements Status {
 
 	public List<String> getBucketNames() {
 		return bucketNames;
+	}
+
+	@Override
+	public Timestamp getCreatedAt() {
+		return createdAt;
 	}
 }

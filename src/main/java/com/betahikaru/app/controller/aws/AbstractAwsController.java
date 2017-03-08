@@ -1,5 +1,6 @@
 package com.betahikaru.app.controller.aws;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public abstract class AbstractAwsController {
 			Status status = monitor.monitorStatus();
 			statusMap.put(status.getName(), status);
 		}
-		AwsStatus awsStatus = new AwsStatus(statusMap);
+		AwsStatus awsStatus = new AwsStatus(statusMap, new Timestamp(System.currentTimeMillis()));
 		return awsStatus;
 	}
 }

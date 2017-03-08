@@ -1,5 +1,6 @@
 package com.betahikaru.app.usecase.aws;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +37,13 @@ public class S3Monitor implements Monitor {
 	public S3Status monitorStatus() {
 		AmazonS3 s3Client = createClient();
 		List<Bucket> bucketList = s3Client.listBuckets();
+		Timestamp createdAt = new Timestamp(System.currentTimeMillis());
 		int countBuckets = bucketList.size();
 		List<String> bucketNames = new ArrayList<>();
 		for (Bucket bucket : bucketList) {
 			bucketNames.add(bucket.getName());
 		}
-		S3Status status = new S3Status(countBuckets, bucketNames);
+		S3Status status = new S3Status(countBuckets, bucketNames, createdAt);
 		return status;
 	}
 }

@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-apply plugin: "io.spring.dependency-management"
+apply plugin: 'io.spring.dependency-management'
 
 jar {
     baseName = 'aws-monitor'
@@ -32,10 +32,17 @@ dependencyManagement {
 }
 
 dependencies {
+    // web
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-actuator")
-	compile("com.amazonaws:aws-java-sdk:1.11.86")
-    
-    
     testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    // db
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+    compile("mysql:mysql-connector-java")
+
+    // aws
+    compile("com.amazonaws:aws-java-sdk-ec2")
+    compile("com.amazonaws:aws-java-sdk-iam")
+    compile("com.amazonaws:aws-java-sdk-s3")
 }
